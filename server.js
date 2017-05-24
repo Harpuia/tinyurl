@@ -2,25 +2,22 @@
  * Created by Yuchao on 8/8/16.
  */
 
-var http = require('http');
-var fs = require('fs');
+var express = require('express');
+var app = express();
+var restRouter = require('./routes/api');
+var redirectRouter = require('./routes/redirect');
 
-http.createServer(function(req, res) {
-    console.log("server started");
+app.use("/api/v1", restRouter);
+app.use("/:shortUrl", redirectRouter);
 
-    if(req.url == '/') {
-        res.writeHead(200, {"Content-Type": "text-html"});
-        var html = fs.readFileSync(__dirname + '/index.html');
-        res.end(html);
-    }
+/*
+ app.get('/', function (req, res) {
+ //res.send("express server");
+ res.json({
+ name: "yuchao",
+ age: 20
+ });
+ });
+ */
 
-    if(req.url == '/api') {
-        res.writeHead(200, {"Content-Type": "text-html"});
-        var obj  = {
-            name:'yuchao',
-            age: 20
-        };
-        res.end(JSON.stringify(obj));
-    }
-
-}).listen(3000);
+app.listen(3000);
