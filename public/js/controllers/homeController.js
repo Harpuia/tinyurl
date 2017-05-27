@@ -4,7 +4,7 @@ angular.module("tinyurlApp")
             $http.post("/api/v1/urls", {
                 longUrl: $scope.longUrl
             }).success(function (data) {
-                $location.path("/urls" + data.shortUrl);
+                $location.path("/urls/" + data.shortUrl);
             });
         }
     }]);
